@@ -1,3 +1,5 @@
 test-crc8
 *.o
 *~
+*.pyc
+

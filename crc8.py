@@ -1,6 +1,6 @@
 class CRC8(object):
     # Precompute the table
-    def __init__(self, poly=TESLA_CRC_POLY, init=TESLA_CRC_INIT):
+    def __init__(self, poly, init):
         self.crctab = []
         self.init = init
 
@@ -33,3 +33,5 @@ class CRC8(object):
         for byte in bytelist:
             current_crc = self.single(byte, current_crc)
         return current_crc
+
+
