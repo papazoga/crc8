@@ -31,10 +31,11 @@ unsigned char crc8_single(unsigned char a, unsigned char b)
         unsigned char mask = 1;
 
         printf("\n%02x", b);
-	while (b) {
-		if (b & 1)
+        mask = 1;
+	while (mask > 0) {
+		if (b & mask)
 			a ^= *residue;
-		b <<= 1;
+		mask <<= 1;
 		residue++;
 	}
 
@@ -60,5 +61,5 @@ unsigned char crc8_compute(unsigned char init, const unsigned char *data, int co
 void main() {
   crc8_generate_table(0x1D);
   char sample[7] = {0x20,0x00,0x20,0x0c,0x04,0xff,0x00};
-  printf("%02x", crc8_compute(0xB0,sample,7));
+  printf("%02x", crc8_compute(0xB0,sample,8));
 }
