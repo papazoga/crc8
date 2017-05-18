@@ -1,4 +1,5 @@
 #include "crc8.h"
+#include <stdio.h>
 
 static unsigned char crctab[8];
 
@@ -27,14 +28,18 @@ void crc8_generate_table(unsigned char poly)
 unsigned char crc8_single(unsigned char a, unsigned char b)
 {
 	unsigned char *residue = crctab;
+        unsigned char mask = 1;
 
-	while (b) {
-		if (b & 1)
+        printf("\n%02x", b);
+        mask = 1;
+	while (mask > 0) {
+		if (b & mask)
 			a ^= *residue;
-		b >>= 1;
+		mask <<= 1;
 		residue++;
 	}
 
+        printf("%02x", a);
 	return a;
 }
 
@@ -51,4 +56,10 @@ unsigned char crc8_compute(unsigned char init, const unsigned char *data, int co
 	}
 
 	return crc;
+}
+
+void main() {
+  crc8_generate_table(0x1D);
+  char sample[8] = {0x20,0x00,0x20,0x0c,0x04,0xff,0x00, 0x00};
+  printf("%02x", crc8_compute(0xB0,sample,8));
 }
